@@ -5,6 +5,7 @@
  * - Connects to Freighter wallet
  * - Displays XLM balance
  * - Allows sending XLM payments
+ * - Shows transaction history with clickable addresses
  * 
  * Built for the Stellar Journey to Mastery - Level 1 White Belt Challenge
  */
@@ -13,6 +14,7 @@ import { useState, useCallback } from "react";
 import WalletConnect from "@/components/WalletConnect";
 import Balance from "@/components/Balance";
 import SendPayment from "@/components/SendPayment";
+import TransactionHistory from "@/components/TransactionHistory";
 import { Sparkles, Github, BookOpen } from "lucide-react";
 
 const Index = () => {
@@ -20,8 +22,11 @@ const Index = () => {
   // null means no wallet is connected
   const [publicKey, setPublicKey] = useState(null);
   
-  // Counter to trigger balance refresh after transactions
-  const [balanceRefreshKey, setBalanceRefreshKey] = useState(0);
+  // Counter to trigger balance and history refresh after transactions
+  const [refreshKey, setRefreshKey] = useState(0);
+  
+  // Selected recipient address from transaction history
+  const [selectedAddress, setSelectedAddress] = useState("");
 
   /**
    * Called when wallet successfully connects
@@ -35,14 +40,29 @@ const Index = () => {
    */
   const handleDisconnect = useCallback(() => {
     setPublicKey(null);
+    setSelectedAddress("");
   }, []);
 
   /**
-   * Called after a successful transaction to refresh balance
+   * Called after a successful transaction to refresh balance and history
    */
   const handleTransactionComplete = useCallback(() => {
-    // Increment key to trigger Balance component refresh
-    setBalanceRefreshKey((prev) => prev + 1);
+    // Increment key to trigger Balance and TransactionHistory refresh
+    setRefreshKey((prev) => prev + 1);
+    // Clear selected address after successful transaction
+    setSelectedAddress("");
+  }, []);
+
+  /**
+   * Called when user clicks an address in transaction history
+   */
+  const handleSelectAddress = useCallback((address) => {
+    setSelectedAddress(address);
+    // Scroll to send payment form on mobile
+    const sendPaymentElement = document.getElementById("send-payment");
+    if (sendPaymentElement) {
+      sendPaymentElement.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
   }, []);
 
   return (
@@ -92,12 +112,12 @@ const Index = () => {
           </h2>
           <p className="text-muted-foreground max-w-md mx-auto">
             Connect your Freighter wallet to send XLM on the Stellar Testnet. 
-            Perfect for learning blockchain development.
+            Click any address in your history to auto-fill the recipient.
           </p>
         </div>
 
         {/* Cards grid */}
-        <div className="max-w-4xl mx-auto grid gap-6 md:grid-cols-2">
+        <div className="max-w-5xl mx-auto grid gap-6 lg:grid-cols-3">
           {/* Left column - Wallet and Balance */}
           <div className="space-y-6">
             <WalletConnect
@@ -106,22 +126,32 @@ const Index = () => {
               onDisconnect={handleDisconnect}
             />
             <Balance 
-              key={balanceRefreshKey}
+              key={`balance-${refreshKey}`}
               publicKey={publicKey} 
             />
           </div>
 
-          {/* Right column - Send Payment */}
-          <div>
+          {/* Middle column - Send Payment */}
+          <div id="send-payment">
             <SendPayment
               publicKey={publicKey}
               onTransactionComplete={handleTransactionComplete}
+              prefilledDestination={selectedAddress}
+            />
+          </div>
+
+          {/* Right column - Transaction History */}
+          <div>
+            <TransactionHistory
+              publicKey={publicKey}
+              onSelectAddress={handleSelectAddress}
+              refreshTrigger={refreshKey}
             />
           </div>
         </div>
 
         {/* Info cards */}
-        <div className="max-w-4xl mx-auto mt-12 grid gap-4 sm:grid-cols-3">
+        <div className="max-w-5xl mx-auto mt-12 grid gap-4 sm:grid-cols-3">
           <div className="glass-card p-4 text-center">
             <div className="text-2xl mb-2">🚀</div>
             <h4 className="font-medium text-foreground mb-1">Fast & Cheap</h4>
@@ -137,10 +167,10 @@ const Index = () => {
             </p>
           </div>
           <div className="glass-card p-4 text-center">
-            <div className="text-2xl mb-2">🧪</div>
-            <h4 className="font-medium text-foreground mb-1">Testnet Safe</h4>
+            <div className="text-2xl mb-2">📜</div>
+            <h4 className="font-medium text-foreground mb-1">Full History</h4>
             <p className="text-xs text-muted-foreground">
-              Practice with test XLM - no real money at risk
+              View all transactions and reuse addresses with one click
             </p>
           </div>
         </div>
