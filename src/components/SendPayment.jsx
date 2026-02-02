@@ -9,7 +9,7 @@
  * 5. User sees success/failure feedback with transaction hash
  */
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { signTransaction } from "@stellar/freighter-api";
 import {
   buildPaymentTransaction,
@@ -30,13 +30,20 @@ import {
   Loader2,
 } from "lucide-react";
 
-export default function SendPayment({ publicKey, onTransactionComplete }) {
-  const [destination, setDestination] = useState("");
+export default function SendPayment({ publicKey, onTransactionComplete, prefilledDestination }) {
+  const [destination, setDestination] = useState(prefilledDestination || "");
   const [amount, setAmount] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
   const [step, setStep] = useState("input"); // input, signing, submitting
+
+  // Update destination when prefilledDestination changes
+  useEffect(() => {
+    if (prefilledDestination) {
+      setDestination(prefilledDestination);
+    }
+  }, [prefilledDestination]);
 
   /**
    * Validates the form inputs

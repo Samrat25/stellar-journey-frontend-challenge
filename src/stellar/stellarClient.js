@@ -195,4 +195,120 @@ export function getExplorerUrl(hash) {
   return `https://stellar.expert/explorer/testnet/tx/${hash}`;
 }
 
-export { HORIZON_URL, NETWORK_PASSPHRASE };
+/**
+ * Gets the Stellar Explorer URL for an account
+ * 
+ * @param {string} publicKey - The account public key
+ * @returns {string} - The explorer URL
+ */
+export function getAccountExplorerUrl(publicKey) {
+  return `https://stellar.expert/explorer/testnet/account/${publicKey}`;
+}
+
+/**
+ * Fetches transaction history for an account
+ * Returns payment and create_account operations (XLM transfers)
+ * 
+ * @param {string} publicKey - The account public key
+ * @param {number} limit - Maximum number of transactions to fetch (default: 20)
+ * @returns {Promise<Array>} - Array of transaction records
+ */
+export async function getTransactionHistory(publicKey, limit = 20) {
+  try {
+    // Fetch operations for the account
+    // We filter for payment and create_account operations
+    const operations = await server
+      .operations()
+      .forAccount(publicKey)
+      .order("desc")
+      .limit(limit)
+      .call();
+
+    // Process and format the operations
+    const transactions = await Promise.all(
+      operations.records
+        .filter((op) => {
+          // Only include payment and create_account operations
+          return op.type === "payment" || op.type === "create_account";
+        })
+        .map(async (op) => {
+          // Determine if this was a sent or received transaction
+          const isSent = op.source_account === publicKey;
+          
+          // Get the other party's address
+          let otherParty;
+          let amount;
+          
+          if (op.type === "payment") {
+            otherParty = isSent ? op.to : op.from;
+            amount = op.amount;
+          } else if (op.type === "create_account") {
+            otherParty = isSent ? op.account : op.source_account;
+            amount = op.starting_balance;
+          }
+
+          // Fetch transaction details for timestamp and hash
+          let txDetails = null;
+          try {
+            const response = await fetch(op._links.transaction.href);
+            txDetails = await response.json();
+          } catch (e) {
+            console.error("Error fetching tx details:", e);
+          }
+
+          return {
+            id: op.id,
+            type: op.type,
+            direction: isSent ? "sent" : "received",
+            amount: amount,
+            otherParty: otherParty,
+            timestamp: txDetails?.created_at || op.created_at,
+            hash: txDetails?.hash || null,
+            successful: op.transaction_successful,
+            memo: txDetails?.memo || null,
+          };
+        })
+    );
+
+    return transactions;
+  } catch (error) {
+    if (error.response && error.response.status === 404) {
+      return []; // No transactions for this account
+    }
+    throw error;
+  }
+}
+
+/**
+ * Extracts unique addresses from transaction history
+ * Useful for building an address book / suggestions
+ * 
+ * @param {Array} transactions - Array of transaction records
+ * @param {string} ownAddress - The user's own address (to exclude)
+ * @returns {Array} - Array of unique addresses with metadata
+ */
+export function getUniqueAddresses(transactions, ownAddress) {
+  const addressMap = new Map();
+
+  transactions.forEach((tx) => {
+    if (tx.otherParty && tx.otherParty !== ownAddress) {
+      const existing = addressMap.get(tx.otherParty);
+      if (!existing || new Date(tx.timestamp) > new Date(existing.lastUsed)) {
+        addressMap.set(tx.otherParty, {
+          address: tx.otherParty,
+          lastUsed: tx.timestamp,
+          transactionCount: (existing?.transactionCount || 0) + 1,
+        });
+      } else {
+        existing.transactionCount += 1;
+      }
+    }
+  });
+
+  // Sort by most recently used
+  return Array.from(addressMap.values()).sort(
+    (a, b) => new Date(b.lastUsed) - new Date(a.lastUsed)
+  );
+}
+
+export { HORIZON_URL, NETWORK_PASSPHRASE, server };
