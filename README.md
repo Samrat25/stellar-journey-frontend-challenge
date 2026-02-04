@@ -1,115 +1,248 @@
-# Stellar Payment dApp
+# StellarPay - XLM Payment dApp
 
-A modern, user-friendly decentralized application for sending XLM payments on the Stellar Testnet using Freighter wallet.
+A modern, user-friendly decentralized application for sending XLM payments on the Stellar Testnet. Built with React, TypeScript, and integrated with Freighter wallet for secure transaction signing.
 
-## Features
+![Stellar](https://img.shields.io/badge/Stellar-Testnet-blue)
+![React](https://img.shields.io/badge/React-18.3.1-61dafb)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.8.3-blue)
+![License](https://img.shields.io/badge/License-MIT-green)
 
-✨ **Enhanced Freighter Wallet Integration**
-- Seamless wallet connection with auto-detection
-- Beautiful connection status indicators
-- Network verification (Testnet)
-- One-click address copying
-- Direct link to Stellar Explorer
+## 🌟 Features
 
-💰 **Smart Balance Display**
-- Real-time XLM balance updates
-- Elegant loading states
-- Low balance warnings
-- Quick access to Friendbot for test XLM
+- **🔐 Secure Wallet Integration** - Connect your Freighter wallet with one click
+- **💰 Real-time Balance** - View your XLM balance with auto-refresh
+- **⚡ Instant Payments** - Send XLM to any Stellar address in seconds
+- **📊 Transaction History** - Track all your payments with detailed information
+- **🎨 Modern UI** - Beautiful, responsive interface with smooth animations
+- **🔄 Network Verification** - Automatic Testnet network detection
+- **📱 Mobile Responsive** - Works seamlessly on all devices
 
-🚀 **Intuitive Payment Interface**
-- Clean, modern form design
-- Real-time input validation
-- Step-by-step transaction feedback
-- Success animations with transaction links
-- Comprehensive error handling
+## 🚀 Quick Start
 
-🎨 **Premium UI/UX**
-- Glassmorphism design with cosmic theme
-- Smooth animations and transitions
-- Toast notifications for all actions
-- Responsive layout for all devices
-- Accessible components using shadcn/ui
+### Prerequisites
 
-## Technologies
+- Node.js (v16 or higher)
+- npm or yarn
+- [Freighter Wallet](https://www.freighter.app/) browser extension
 
-- **Stellar SDK** - Blockchain interactions
-- **Freighter API** - Wallet integration
-- **React** - UI framework
-- **TypeScript** - Type safety
-- **Vite** - Build tool
-- **shadcn/ui** - Component library
-- **Tailwind CSS** - Styling
-- **Sonner** - Toast notifications
+### Installation
 
-## Project info
+1. **Clone the repository**
+   ```bash
+   git clone <your-repo-url>
+   cd stellarpay-dapp
+   ```
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-## How can I edit this code?
+3. **Start the development server**
+   ```bash
+   npm run dev
+   ```
 
-There are several ways of editing your application.
+4. **Open your browser**
+   ```
+   Navigate to http://localhost:5173
+   ```
 
-**Use Lovable**
+### Building for Production
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```bash
+npm run build
 ```
 
-**Edit a file directly in GitHub**
+The built files will be in the `dist/` directory.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 📖 How to Use
 
-**Use GitHub Codespaces**
+### 1. Install Freighter Wallet
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+- Visit [freighter.app](https://www.freighter.app/)
+- Install the browser extension
+- Create a new wallet or import an existing one
+- **Important:** Switch to Testnet in Freighter settings
 
-## What technologies are used for this project?
+### 2. Get Test XLM
 
-This project is built with:
+- Connect your wallet in the app
+- Click "Fund with Friendbot" to get 10,000 test XLM
+- Wait a few seconds for the transaction to complete
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### 3. Send Your First Payment
 
-## How can I deploy this project?
+- Enter the recipient's Stellar address (starts with 'G')
+- Enter the amount of XLM to send
+- Click "Send Payment"
+- Approve the transaction in Freighter
+- Done! 🎉
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+## 📸 Screenshots
 
-## Can I connect a custom domain to my Lovable project?
+### Landing Page
+*Beautiful hero section with call-to-action*
 
-Yes, you can!
+![Landing Page](./screenshots/landing.png)
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### Wallet Connected State
+*Freighter wallet successfully connected with address displayed*
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+![Wallet Connected](./screenshots/wallet-connected.png)
+
+### Balance Displayed
+*Real-time XLM balance with refresh functionality*
+
+![Balance Display](./screenshots/balance.png)
+
+### Send Payment
+*Clean payment form with validation*
+
+![Send Payment](./screenshots/send-payment.png)
+
+### Successful Transaction
+*Transaction confirmation with hash and explorer link*
+
+![Transaction Success](./screenshots/transaction-success.png)
+
+### Transaction History
+*Complete transaction history with detailed information*
+
+![Transaction History](./screenshots/history.png)
+
+## 🏗️ Tech Stack
+
+### Frontend
+- **React 18** - UI framework
+- **TypeScript** - Type safety
+- **Vite** - Build tool and dev server
+- **Tailwind CSS** - Styling
+- **shadcn/ui** - Component library
+
+### Blockchain
+- **Stellar SDK** - Blockchain interactions
+- **Freighter API** - Wallet integration
+- **Horizon API** - Stellar network communication
+
+### Additional Libraries
+- **React Router** - Navigation
+- **Sonner** - Toast notifications
+- **Lucide React** - Icons
+- **TanStack Query** - Data fetching
+
+## 📁 Project Structure
+
+```
+stellarpay-dapp/
+├── src/
+│   ├── components/          # React components
+│   │   ├── ui/             # shadcn/ui components
+│   │   ├── Balance.jsx     # Balance display
+│   │   ├── SendPayment.jsx # Payment form
+│   │   ├── WalletConnect.jsx # Wallet connection
+│   │   └── TransactionHistory.jsx
+│   ├── pages/              # Page components
+│   │   ├── Landing.tsx     # Landing page
+│   │   ├── Connect.tsx     # Wallet connection page
+│   │   ├── Dashboard.tsx   # Main dashboard
+│   │   └── History.tsx     # Transaction history
+│   ├── stellar/            # Stellar SDK utilities
+│   │   └── stellarClient.js
+│   ├── App.tsx             # App root with routes
+│   └── main.tsx            # Entry point
+├── public/                 # Static assets
+├── screenshots/            # App screenshots
+└── package.json
+```
+
+## 🔧 Configuration
+
+### Network Settings
+
+The app is configured for Stellar Testnet by default:
+
+```javascript
+const HORIZON_URL = "https://horizon-testnet.stellar.org";
+const NETWORK_PASSPHRASE = StellarSdk.Networks.TESTNET;
+```
+
+To switch to Mainnet (not recommended for this app):
+1. Update `HORIZON_URL` to `https://horizon.stellar.org`
+2. Update `NETWORK_PASSPHRASE` to `StellarSdk.Networks.PUBLIC`
+3. Update Freighter to Mainnet
+
+## 🧪 Testing
+
+### Run Tests
+```bash
+npm test
+```
+
+### Run Tests in Watch Mode
+```bash
+npm run test:watch
+```
+
+## 🌐 Deployment
+
+### Deploy to Vercel
+```bash
+npm install -g vercel
+vercel
+```
+
+### Deploy to Netlify
+```bash
+npm run build
+# Upload dist/ folder to Netlify
+```
+
+## 🔐 Security
+
+- **Non-custodial** - Your keys never leave your Freighter wallet
+- **Testnet Only** - Uses test XLM with no real value
+- **Transaction Signing** - All transactions signed locally in Freighter
+- **Network Verification** - Automatic network mismatch detection
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Built for the **Stellar Journey to Mastery** - Level 1 White Belt Challenge
+- Powered by [Stellar](https://stellar.org)
+- Wallet integration by [Freighter](https://freighter.app)
+- UI components by [shadcn/ui](https://ui.shadcn.com)
+
+## 📞 Support
+
+- **Stellar Documentation**: [developers.stellar.org](https://developers.stellar.org)
+- **Freighter Documentation**: [docs.freighter.app](https://docs.freighter.app)
+- **Stellar Discord**: [discord.gg/stellar](https://discord.gg/stellar)
+
+## 🎯 Roadmap
+
+- [ ] Multi-asset support (not just XLM)
+- [ ] Transaction memos
+- [ ] Address book
+- [ ] QR code scanning
+- [ ] Transaction filtering
+- [ ] Export history (CSV)
+- [ ] Dark/light theme toggle
+- [ ] Multiple language support
+
+---
+
+**Made with ❤️ for the Stellar Community**

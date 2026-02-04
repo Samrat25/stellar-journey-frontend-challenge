@@ -1,8 +1,11 @@
 {
-  "name": "vite_react_shadcn_ts",
+  "name": "stellarpay-dapp",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "description": "A modern payment dApp for sending XLM on Stellar Testnet with Freighter wallet integration",
+  "author": "Stellar Developer Community",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
