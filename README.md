@@ -84,32 +84,32 @@ The built files will be in the `dist/` directory.
 ### Landing Page
 *Beautiful hero section with call-to-action*
 
-![Landing Page](./screenshots/landing.png)
+![Landing Page](./screenshots/Landingpage.png)
 
 ### Wallet Connected State
 *Freighter wallet successfully connected with address displayed*
 
-![Wallet Connected](./screenshots/wallet-connected.png)
+![Wallet Connected](./screenshots/Balancecheck.png)
 
 ### Balance Displayed
 *Real-time XLM balance with refresh functionality*
 
-![Balance Display](./screenshots/balance.png)
+![Balance Display](./screenshots/Balancecheck.png)
 
 ### Send Payment
 *Clean payment form with validation*
 
-![Send Payment](./screenshots/send-payment.png)
+![Send Payment](./screenshots/Transaction.png)
 
 ### Successful Transaction
 *Transaction confirmation with hash and explorer link*
 
-![Transaction Success](./screenshots/transaction-success.png)
+![Transaction Success](./screenshots/hash.png)
 
 ### Transaction History
 *Complete transaction history with detailed information*
 
-![Transaction History](./screenshots/history.png)
+![Transaction History](./screenshots/transactionhistory.png)
 
 ## 🏗️ Tech Stack
 
@@ -184,18 +184,7 @@ npm test
 npm run test:watch
 ```
 
-## 🌐 Deployment
 
-### Deploy to Vercel
-```bash
-npm install -g vercel
-vercel
-```
-
-### Deploy to Netlify
-```bash
-npm run build
-# Upload dist/ folder to Netlify
 ```
 
 ## 🔐 Security
